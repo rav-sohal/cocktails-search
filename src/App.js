@@ -1,25 +1,73 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from 'react';
+import Header from './components/Header';
+import Content from './components/Content';
+import Search from './components/Search';
+import ResultList from './components/ResultList';
+import {BrowserRouter, Route} from 'react-router-dom';
+import axios from 'axios';
+import DrinkDetails from './components/DrinkDetails';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = {
+    cocktails: [],
+    randomCocktail: [],
+    loading: true,
+  };
+
+  searchCocktails = query => {
+    axios
+      .get (`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${query}`)
+      .then (response => {
+        this.setState ({cocktails: response.data.drinks});
+      })
+      .catch (error => {
+        console.log ('Error', error);
+      });
+  };
+
+  getRandomCocktail = () => {
+    axios
+      .get ('https://www.thecocktaildb.com/api/json/v1/1/random.php')
+      .then (response => {
+        this.setState ({randomCocktail: response.data.drinks, loading: false});
+      })
+      .catch (error => {
+        console.log ('Error', error);
+      });
+  };
+
+  componentDidMount () {
+    this.getRandomCocktail ();
+  }
+
+  render () {
+    return (
+      <BrowserRouter>
+        <Header />
+        <div className="App container mt-5">
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <React.Fragment>
+                {this.state.loading
+                  ? <div className="container text-center mt-5">
+                      <div className="spinner-border text-secondary">
+                        <span className="sr-only text-center" />
+                      </div>
+                    </div>
+                  : <Content random={this.state.randomCocktail} />}
+                <Search onSearch={this.searchCocktails} />
+                <ResultList data={this.state.cocktails} />
+              </React.Fragment>
+            )}
+          />
+          <Route path="/details/:id" render={  ({match}) => <DrinkDetails id={match.params.id} data={this.state.cocktails} /> } />
+          <Route path="/search" component={Search} />
+        </div>
+      </BrowserRouter>
+    );
+  }
 }
 
 export default App;
