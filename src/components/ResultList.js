@@ -25,8 +25,6 @@ const ResultList = props => {
         <div className="container" />
         {resultDrinks}
       </div>
-      <div className="container">
-      </div>
     </React.Fragment>
   );
 };

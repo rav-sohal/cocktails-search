@@ -9,7 +9,7 @@ const style = {
 
 const Content = props => {
   const result = props.random;
-  console.log (result);
+  // console.log (result);
   let drinks = result.map (randomDrink => (
     <div className="container" key={randomDrink.idDrink}>
       <Random

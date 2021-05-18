@@ -10,6 +10,7 @@ import DrinkDetails from './components/DrinkDetails';
 class App extends Component {
   state = {
     cocktails: [],
+    cocktailId: [],
     randomCocktail: [],
     loading: true,
   };
@@ -19,6 +20,21 @@ class App extends Component {
       .get (`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${query}`)
       .then (response => {
         this.setState ({cocktails: response.data.drinks});
+      })
+      .catch (error => {
+        console.log ('Error', error);
+      });
+  };
+
+  dummyFunction = () => {
+    console.log('This has been clicked!')
+  };
+
+  getCocktailId = (query) => {
+    axios
+      .get (`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${query}`)
+      .then (response => {
+        this.setState ({cocktailId: response.data.drinks});
       })
       .catch (error => {
         console.log ('Error', error);
@@ -62,7 +78,7 @@ class App extends Component {
               </React.Fragment>
             )}
           />
-          <Route path="/details/:id" render={  ({match}) => <DrinkDetails id={match.params.id} data={this.state.cocktails} /> } />
+          <Route path="/details/:id" render={  ({match}) => <DrinkDetails id={match.params.id} /> } />
           <Route path="/search" component={Search} />
         </div>
       </BrowserRouter>
