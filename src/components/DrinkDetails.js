@@ -23,7 +23,7 @@ const DrinkDetails = ({id}) => {
   const imgStyle = {
     width: '50%',
   };
-
+  
   //   let output = data.map (inner => {
   //     if (inner.idDrink === id) {
   //       return (

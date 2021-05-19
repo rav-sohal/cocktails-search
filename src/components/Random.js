@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const ImageContainer = styled.div`
     width: 100%; 
@@ -37,5 +38,12 @@ const Random = (props) => {
       </div>
     </React.Fragment>    
 )};
+
+Random.propTypes = {
+  image: PropTypes.string,
+  title: PropTypes.string,
+  type: PropTypes.string,
+  category: PropTypes.string
+};
 
 export default Random;

@@ -1,5 +1,6 @@
 import React from 'react';
 import Random from './Random';
+import PropTypes from 'prop-types';
 
 const style = {
   height: 'auto',
@@ -32,6 +33,10 @@ const Content = props => {
       </div>
     </React.Fragment>
   );
+};
+
+Content.propTypes = {
+  random: PropTypes.arrayOf(PropTypes.object)
 };
 
 export default Content;

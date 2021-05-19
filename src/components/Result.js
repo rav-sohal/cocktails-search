@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const ImageContainer = styled.div`
     width: 100%; 
@@ -41,5 +42,13 @@ const Result = props => {
     </React.Fragment>
   );
 };
+
+Result.propTypes = {
+    image: PropTypes.string,
+    title: PropTypes.string,
+    type: PropTypes.string,
+    category: PropTypes.string,
+    id: PropTypes.number
+  };
 
 export default Result;

@@ -1,5 +1,6 @@
 import React from 'react';
 import Result from './Result';
+import PropTypes from 'prop-types';
 
 const style = {
   height: 'auto',
@@ -40,5 +41,9 @@ const ResultList = props => {
     </React.Fragment>
   );
 };
+
+ResultList.propTypes = {
+    data: PropTypes.arrayOf(PropTypes.object)
+  };
 
 export default ResultList;
