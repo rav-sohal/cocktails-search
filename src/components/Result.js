@@ -35,7 +35,7 @@ const Result = props => {
           <p><strong>Drink Catgeory</strong> {props.category}</p>
         </div>
         <div className="col-md-2">
-        <Link to={`/details/${props.id}`}><BlockBtn className="btn btn-primary mt-3">{props.title}</BlockBtn></Link>
+        <Link to={`/details/${props.id}`}><BlockBtn className="btn btn-primary mt-3">View</BlockBtn></Link>
         </div>
       </div>
     </React.Fragment>
