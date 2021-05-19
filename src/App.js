@@ -26,21 +26,6 @@ class App extends Component {
       });
   };
 
-  dummyFunction = () => {
-    console.log('This has been clicked!')
-  };
-
-  getCocktailId = (query) => {
-    axios
-      .get (`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${query}`)
-      .then (response => {
-        this.setState ({cocktailId: response.data.drinks});
-      })
-      .catch (error => {
-        console.log ('Error', error);
-      });
-  };
-
   getRandomCocktail = () => {
     axios
       .get ('https://www.thecocktaildb.com/api/json/v1/1/random.php')

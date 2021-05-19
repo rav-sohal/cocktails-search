@@ -7,18 +7,30 @@ const style = {
   padding: '50px',
 };
 
+const noResults = () => {
+  return (<p>There are no results, please try again!</p>);
+};
+
 const ResultList = props => {
   const result = props.data;
-  let resultDrinks = result.map(inner => 
-       <Result key={inner.idDrink}
-       title={inner.strDrink}
-       image={inner.strDrinkThumb}
-       type={inner.strAlcoholic}
-       category={inner.strCategory}
-       instr={inner.strInstructions}
-       id={inner.idDrink}
-       />
-  );
+  let resultDrinks;
+
+    if (result) {
+      resultDrinks = result.map (inner => 
+        <Result
+          key={inner.idDrink}
+          title={inner.strDrink}
+          image={inner.strDrinkThumb}
+          type={inner.strAlcoholic}
+          category={inner.strCategory}
+          instr={inner.strInstructions}
+          id={inner.idDrink}
+        />
+      );
+    } else {
+      resultDrinks = noResults();
+    };
+
   return (
     <React.Fragment>
       <div style={style}>
