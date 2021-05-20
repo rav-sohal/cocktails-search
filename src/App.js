@@ -46,12 +46,12 @@ class App extends Component {
 
   componentDidMount () {
     this.getRandomCocktail ();
-    console.log('mounted');
+    console.log('mounted random');
   }
 
   componentWillUnmount() {
     cancelTokenSource.cancel();
-    console.log('unmounted');
+    console.log('unmounted random');
   }
 
   render () {

@@ -9,13 +9,19 @@ const DrinkDetails = ({id}) => {
 
   useEffect (
     () => {
+      let source = axios.CancelToken.source();
       axios (
-        `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${query}`
-      )
+        `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${query}`, {
+            cancelToken: source.token
+        })
         .then (response => setData (response.data.drinks))
         .catch (error =>
           console.log ('Error fetching and parsing data', error)
-        );
+        )
+        return function () {
+            source.cancel();
+            console.log('unmounted drinks details');
+        };
     },
     [query]
   );
@@ -23,7 +29,7 @@ const DrinkDetails = ({id}) => {
   const imgStyle = {
     width: '50%',
   };
-  
+
   //   let output = data.map (inner => {
   //     if (inner.idDrink === id) {
   //       return (
