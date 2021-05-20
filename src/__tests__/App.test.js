@@ -6,3 +6,8 @@ test('renders Drinks Search', () => {
   const linkElement = screen.getByText(/Drinks search/i);
   expect(linkElement).toBeInTheDocument();
 });
+
+test('Mock Axios Api call', () => {
+  render(<App />);
+ 
+});

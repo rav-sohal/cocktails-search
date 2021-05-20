@@ -7,6 +7,9 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import axios from 'axios';
 import DrinkDetails from './components/DrinkDetails';
 
+
+const cancelTokenSource = axios.CancelToken.source();
+
 class App extends Component {
   state = {
     cocktails: [],
@@ -17,7 +20,9 @@ class App extends Component {
 
   searchCocktails = query => {
     axios
-      .get (`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${query}`)
+      .get (`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${query}` , {
+        cancelToken: cancelTokenSource.token
+      })
       .then (response => {
         this.setState ( {cocktails: response.data.drinks, loading: false});
       })
@@ -28,7 +33,9 @@ class App extends Component {
 
   getRandomCocktail = () => {
     axios
-      .get ('https://www.thecocktaildb.com/api/json/v1/1/random.php')
+      .get ('https://www.thecocktaildb.com/api/json/v1/1/random.php', { 
+        cancelToken: cancelTokenSource.token
+      })
       .then (response => {
         this.setState ({randomCocktail: response.data.drinks, loading: false});
       })
@@ -39,6 +46,12 @@ class App extends Component {
 
   componentDidMount () {
     this.getRandomCocktail ();
+    console.log('mounted');
+  }
+
+  componentWillUnmount() {
+    cancelTokenSource.cancel();
+    console.log('unmounted');
   }
 
   render () {
@@ -58,6 +71,7 @@ class App extends Component {
                       </div>
                     </div>
                   : <Content random={this.state.randomCocktail} />}
+
                 <Search onSearch={this.searchCocktails} />
 
                 {this.state.loading

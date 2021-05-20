@@ -48,7 +48,7 @@ Result.propTypes = {
     title: PropTypes.string,
     type: PropTypes.string,
     category: PropTypes.string,
-    id: PropTypes.number
+    id: PropTypes.string
   };
 
 export default Result;
