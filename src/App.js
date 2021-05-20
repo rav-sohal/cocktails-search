@@ -8,7 +8,7 @@ import axios from 'axios';
 import DrinkDetails from './components/DrinkDetails';
 
 
-const cancelTokenSource = axios.CancelToken.source();
+const cancelRequest = axios.CancelToken.source();
 
 class App extends Component {
   state = {
@@ -21,7 +21,7 @@ class App extends Component {
   searchCocktails = query => {
     axios
       .get (`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${query}` , {
-        cancelToken: cancelTokenSource.token
+        cancelToken: cancelRequest.token
       })
       .then (response => {
         this.setState ( {cocktails: response.data.drinks, loading: false});
@@ -34,7 +34,7 @@ class App extends Component {
   getRandomCocktail = () => {
     axios
       .get ('https://www.thecocktaildb.com/api/json/v1/1/random.php', { 
-        cancelToken: cancelTokenSource.token
+        cancelToken: cancelRequest.token
       })
       .then (response => {
         this.setState ({randomCocktail: response.data.drinks, loading: false});
@@ -50,7 +50,7 @@ class App extends Component {
   }
 
   componentWillUnmount() {
-    cancelTokenSource.cancel();
+    cancelRequest.cancel();
     console.log('unmounted random');
   }
 

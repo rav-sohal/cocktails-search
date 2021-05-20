@@ -14,13 +14,13 @@ const DrinkDetails = ({id}) => {
         `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${query}`, {
             cancelToken: source.token
         })
-        .then (response => setData (response.data.drinks))
+        .then (response => setData (response.data.drinks), console.log('details mounted'))
         .catch (error =>
           console.log ('Error fetching and parsing data', error)
         )
         return function () {
             source.cancel();
-            console.log('unmounted drinks details');
+            console.log('details unmounted');
         };
     },
     [query]
