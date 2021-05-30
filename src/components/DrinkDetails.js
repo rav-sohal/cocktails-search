@@ -36,6 +36,10 @@ const DrinkDetails = ({id}) => {
     width: '50%',
   };
 
+  const btnStyle = {
+    width: '100%'
+  }
+
   //   let output = data.map (inner => {
   //     if (inner.idDrink === id) {
   //       return (
@@ -56,13 +60,11 @@ const DrinkDetails = ({id}) => {
       {/* {output} */}
       {data.map (drink => (
         <div key={drink.idDrink} className="row">
-          <div className="col-md-12">
+          <div className="col-md-11">
             <h2>{drink.strDrink}</h2>
             <p>Type: {drink.strAlcoholic}</p>
             <p>Category: {drink.strCategory}</p>
             <p>Instructions: {drink.strInstructions}</p>
-          </div>
-          <div className="col-md-12">
             <img
               className="img-fluid mb-5"
               style={imgStyle}
@@ -70,7 +72,9 @@ const DrinkDetails = ({id}) => {
               alt="cocktail for the details"
             />
           </div>
-          <button className="btn btn-secondary col-1" onClick={handleBack}>Back</button>
+          <div className="col-md-1">
+          <button className="btn btn-secondary" style={btnStyle} onClick={handleBack}>Back</button>
+          </div>
         </div>
       ))}
     </React.Fragment>
