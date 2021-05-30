@@ -3,12 +3,12 @@ import Header from './components/Header';
 import Content from './components/Content';
 import Search from './components/Search';
 import ResultList from './components/ResultList';
-import {BrowserRouter, Route} from 'react-router-dom';
+import NotFound from './components/NotFoundPage';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import axios from 'axios';
 import DrinkDetails from './components/DrinkDetails';
 
-
-const cancelRequest = axios.CancelToken.source();
+const cancelRequest = axios.CancelToken.source ();
 
 class App extends Component {
   state = {
@@ -20,11 +20,14 @@ class App extends Component {
 
   searchCocktails = query => {
     axios
-      .get (`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${query}` , {
-        cancelToken: cancelRequest.token
-      })
+      .get (
+        `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${query}`,
+        {
+          cancelToken: cancelRequest.token,
+        }
+      )
       .then (response => {
-        this.setState ( {cocktails: response.data.drinks, loading: false});
+        this.setState ({cocktails: response.data.drinks, loading: false});
       })
       .catch (error => {
         console.log ('Error', error);
@@ -33,8 +36,8 @@ class App extends Component {
 
   getRandomCocktail = () => {
     axios
-      .get ('https://www.thecocktaildb.com/api/json/v1/1/random.php', { 
-        cancelToken: cancelRequest.token
+      .get ('https://www.thecocktaildb.com/api/json/v1/1/random.php', {
+        cancelToken: cancelRequest.token,
       })
       .then (response => {
         this.setState ({randomCocktail: response.data.drinks, loading: false});
@@ -46,12 +49,10 @@ class App extends Component {
 
   componentDidMount () {
     this.getRandomCocktail ();
-    //console.log('mounted random');
   }
 
-  componentWillUnmount() {
-    cancelRequest.cancel();
-    //console.log('unmounted random');
+  componentWillUnmount () {
+    cancelRequest.cancel ();
   }
 
   render () {
@@ -59,36 +60,39 @@ class App extends Component {
       <BrowserRouter>
         <Header />
         <div className="App container mt-5">
-          <Route
-            exact
-            path="/"
-            render={() => (
-              <React.Fragment>
-                {this.state.loading
-                  ? <div className="container text-center mt-5">
-                      <div className="spinner-border text-secondary">
-                        <span className="sr-only text-center" />
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={() => (
+                <React.Fragment>
+                  {this.state.loading
+                    ? <div className="container text-center mt-5">
+                        <div className="spinner-border text-secondary">
+                          <span className="sr-only text-center" />
+                        </div>
                       </div>
-                    </div>
-                  : <Content random={this.state.randomCocktail} />}
+                    : <Content random={this.state.randomCocktail} />}
 
-                <Search onSearch={this.searchCocktails} />
+                  <Search onSearch={this.searchCocktails} />
 
-                {this.state.loading
-                  ? <div className="container text-center mt-5">
-                      <div className="spinner-border text-secondary">
-                        <span className="sr-only text-center" />
+                  {this.state.loading
+                    ? <div className="container text-center mt-5">
+                        <div className="spinner-border text-secondary">
+                          <span className="sr-only text-center" />
+                        </div>
                       </div>
-                    </div>
-                  : <ResultList data={this.state.cocktails} />}
-              </React.Fragment>
-            )}
-          />
-          <Route
-            path="/details/:id"
-            render={({match}) => <DrinkDetails id={match.params.id} />}
-          />
-          <Route path="/search" component={Search} />
+                    : <ResultList data={this.state.cocktails} />}
+                </React.Fragment>
+              )}
+            />
+            <Route
+              path="/details/:id"
+              render={({match}) => <DrinkDetails id={match.params.id} />}
+            />
+            <Route path="/search" component={Search} />
+            <Route component={NotFound} />
+          </Switch>
         </div>
       </BrowserRouter>
     );

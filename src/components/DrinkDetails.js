@@ -20,7 +20,7 @@ const DrinkDetails = ({id}) => {
         )
         return function () {
             source.cancel();
-            //console.log('details unmounted');
+            console.log('details unmounted');
         };
     },
     [query]

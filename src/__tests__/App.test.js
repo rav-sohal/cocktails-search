@@ -1,5 +1,7 @@
 import {render, screen, fireEvent} from '@testing-library/react';
 import App from '../App';
+import axios from 'axios';
+
 
 describe ('App.js tests', () => {
   test ('Drinks Link in Header', () => {
@@ -17,8 +19,8 @@ describe ('App.js tests', () => {
   test ('Search button trigger event', () => {
     render (<App />);
     const buttonElement = screen.getByRole ('button', {name: /Search/i});
-    fireEvent.click(buttonElement);
-    expect(buttonElement).toBeEnabled();
+    fireEvent.click (buttonElement);
+    expect (buttonElement).toBeEnabled ();
   });
 
   test ('Mock Axios Api call', () => {
