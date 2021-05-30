@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 const DrinkDetails = ({id}) => {
   //const id = match.params.id;
 
+  const history = useHistory();
   const [data, setData] = useState ([]); // declare state
   const [query] = useState (id); // declare new state
 
@@ -25,6 +27,10 @@ const DrinkDetails = ({id}) => {
     },
     [query]
   );
+
+  const handleBack = () => {
+    history.push('/')
+  }
 
   const imgStyle = {
     width: '50%',
@@ -64,6 +70,7 @@ const DrinkDetails = ({id}) => {
               alt="cocktail for the details"
             />
           </div>
+          <button className="btn btn-secondary col-1" onClick={handleBack}>Back</button>
         </div>
       ))}
     </React.Fragment>
