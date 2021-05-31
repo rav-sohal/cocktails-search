@@ -22,8 +22,4 @@ describe ('App.js tests', () => {
     fireEvent.click (buttonElement);
     expect (buttonElement).toBeEnabled ();
   });
-
-  test ('Mock Axios Api call', () => {
-    render (<App />);
-  });
 });
